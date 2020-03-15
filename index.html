@@ -1,0 +1,78 @@
+<HTML>
+    <head>
+        <title> Flappy Bird </title>
+    </head>
+    <body>
+        <canvas id=myCanvas width=500 height=300 style="background-color: cyan;"> </canvas>
+        <script>
+        var ctx = myCanvas.getContext("2d");
+        var bird_x = 150;
+        var bird_y = 150;
+        var BirdImg = new Image();
+        BirdImg.src = "flappybird.png";                                     //Shows what bird looks like
+        var lives = 3
+        ctx.fillStyle= "black";
+        ctx.font = "20px Arial";                                            //Font for lives
+        var ob1_x = 500;
+        var ob1_y = Math.floor(Math.random() * 300);
+        var Ob1Img = new Image();
+        Ob1Img.src = "obstacle.png";                                        //Shows what obstacle 1 looks like
+        var ob2_x = 750;
+        var ob2_y = Math.floor(Math.random() * 300);
+        var Ob2Img = new Image();
+        Ob2Img.src = "obstacle.png";                                        //Shows what obstace 2 looks like
+        var speed = 1000;                                                   //Sets speed
+        function Restart(){
+            location.reload()}                                              //reload
+        function Draw(){
+            ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);           //Clears canvas
+            if(lives==0){
+                ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                ctx.fillStyle= "red";
+                ctx.font = "100px Arial";
+                ctx.fillText("GAME", 100, 120);
+                ctx.fillText("OVER",100,220);
+                setInterval(Restart, 3000) }                                //Says game over when lose
+            else{
+            if(ob1_x==0){
+                ob1_x=500;
+                speed = speed-50}                                          //Moves ob1 back to right and increases speed
+            if(ob2_x==0){
+                ob2_x=500}                                                 //Moves ob2 back to right
+            if(bird_y==300){
+                lives=lives-1;
+                bird_y=150}                                                 //Loses life if hits floor
+            if(Ob1Touching(bird_x, bird_y, BirdImg, ob1_x, ob1_y, Ob1Img)){
+                lives=lives-1;
+                ob1_x=500 }                                                 //If ob1 and bird touching
+            if(Ob2Touching(bird_x, bird_y, BirdImg, ob2_x, ob2_y, Ob2Img)){
+                lives=lives-1;
+                ob2_x=500 }                                                 //If ob2 and bird touching
+            ctx.fillText("Lives = " + lives, 10, 20);
+            ctx.drawImage(BirdImg, bird_x, bird_y);
+            ctx.drawImage(Ob1Img, ob1_x, ob1_y);
+            ctx.drawImage(Ob2Img, ob2_x, ob2_y)}  }                         //Draws bird and obstacles
+        function Move(){
+            ob1_x=ob1_x-10;
+            ob2_x=ob2_x-10}                                                 //Moves obstables left
+        function Drop(){
+            bird_y=bird_y+10}                                               //Makes bird fall
+        function MyHandler (MyEvent) { 
+            bird_y = bird_y - 20;
+            Draw() }                                                        //Moves bird up and down
+        function Ob1Touching(bird_x, bird_y, BirdImg, ob1_x, ob1_y, Ob1Img){
+            if (bird_x >= ob1_x+Ob1Img.width || bird_x+BirdImg.width <= ob1_x) return false; 
+            if (bird_y >= ob1_y+Ob1Img.height || bird_y+BirdImg.height <= ob1_y) return false;
+            return true}                                                    //Returns true if bird and ob1 touching
+        function Ob2Touching(bird_x, bird_y, BirdImg, ob2_x, ob2_y, Ob2Img){
+            if (bird_x >= ob2_x+Ob2Img.width || bird_x+BirdImg.width <= ob2_x) return false; 
+            if (bird_y >= ob2_y+Ob2Img.height || bird_y+BirdImg.height <= ob2_y) return false;
+            return true}                                                    //Returns true if bird and ob2 touching
+        setInterval(Move, speed);
+        setInterval(Drop,500)
+        setInterval(Draw,100)
+        addEventListener("mousedown", MyHandler);                           //Listens for Mouse
+        addEventListener("touchstart", MyHandler);                          //Listens for Mouse
+        </script>
+    </body>
+</html> 
