@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "title.splodge23.edu.mit.scratch"
+        versionCode = "10" 
+        version     = "1.0.0" >
+    <name>Flappybird</name>
+    <description>
+Game - Click to make the bird jump, aviod the obstacles.
+    </description>
+    <author href="http://scratch.mit.edu/users/splodge23" email="samuel.ryan.cz@gmail.com">
+        splodge23
+    </author>
+        <icon src="flappybird.png"/>
+</widget>
